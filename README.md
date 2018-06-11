@@ -1,2 +1,2 @@
 # SpecialDiary
-my special diary for only me - android studio, java
+my special diary only for me - android studio, java
