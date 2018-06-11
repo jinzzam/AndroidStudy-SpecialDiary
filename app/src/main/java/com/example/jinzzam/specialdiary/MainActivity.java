@@ -2,37 +2,52 @@ package com.example.jinzzam.specialdiary;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView welcomemsg;
-    private EditText nameinput;
-    private TextView nameoutput;
-    private Button submit;
-    private String name;
+    private static final String TAG = "MAIN";
+    private TextView tv;
+    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        welcomemsg = findViewById(R.id.textView);
-        nameinput = findViewById(R.id.editText);
-        nameoutput = findViewById(R.id.textView2);
-        submit = findViewById(R.id.button);
+        tv = findViewById(R.id.textView);
+        queue = Volley.newRequestQueue(this);
+        String url = "http://www.google.com";
 
-        welcomemsg.setText("Hi, Please enter your name.");
-
-        submit.setOnClickListener(new View.OnClickListener() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onClick(View v) {
-                name = nameinput.getText().toString();
-                nameoutput.setText(name);
+            public void onResponse(String response) {
+                tv.setText(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
             }
         });
+
+        stringRequest.setTag(TAG);
+        queue.add(stringRequest);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (queue != null) {
+            queue.cancelAll(TAG);
+        }
     }
 }
+

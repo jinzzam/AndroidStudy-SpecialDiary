@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SpecialDiary</string>
+    <string name="this_is_text">This is text.</string>
 </resources>
