@@ -2,6 +2,7 @@ package com.example.jinzzam.specialdiary;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -24,17 +25,19 @@ public class MainActivity extends AppCompatActivity {
 
         tv = findViewById(R.id.textView);
         queue = Volley.newRequestQueue(this);
-        String url = "http://www.google.com";
+        String url = "https://www.google.com";
+        Log.e(TAG, "onCreate: "+"hi" );
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e(TAG, "onResponse: "+response );
                 tv.setText(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e(TAG, "onErrorResponse: "+error );
             }
         });
 
