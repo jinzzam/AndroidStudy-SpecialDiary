@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         etPW = findViewById(R.id.etPW);
         btnSend = findViewById(R.id.btnSend);
         queue = Volley.newRequestQueue(this);
-        String url = "https://192.168.0.4:5000/post";
+        String url = "http://192.168.0.4:3000/";
         Log.e(TAG, "onCreate: " + "hi");
 
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onErrorResponse: " + error);
             }
         }) {
+            @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", etID.getText().toString());
