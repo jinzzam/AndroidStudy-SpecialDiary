@@ -4,12 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <EditText
+        android:id="@+id/etID"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/this_is_text" />
+        android:layout_height="wrap_content"
+        android:hint="enter ID" />
+
+    <EditText
+        android:id="@+id/etPW"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter PW" />
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="send form" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
 
 </LinearLayout>
