@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
         etPW = findViewById(R.id.etPW);
         btnSend = findViewById(R.id.btnSend);
         queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.4:3000/";
+        String url = "http://192.168.0.8:3000/";
         Log.e(TAG, "onCreate: " + "hi");
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e(TAG, "onResponse: " + response);
