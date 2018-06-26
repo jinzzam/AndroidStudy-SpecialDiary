@@ -13,8 +13,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,53 +28,47 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MAIN";
     private TextView tv;
-    private EditText etID;
-    private EditText etPW;
-    private Button btnSend;
     private RequestQueue queue;
+
+    private String id;
+    private String pw;
+    private JSONArray language;
+    private JSONObject item;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv = findViewById(R.id.textView2);
-        etID = findViewById(R.id.etID);
-        etPW = findViewById(R.id.etPW);
-        btnSend = findViewById(R.id.btnSend);
+        tv = findViewById(R.id.textView3);
         queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.8:3000/";
+        String url = "http://192.168.43.36:3000/json";
         Log.e(TAG, "onCreate: " + "hi");
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response) {
-                Log.e(TAG, "onResponse: " + response);
-                tv.setText(response);
+            public void onResponse(JSONObject response) {
+                try {
+                    id = response.getString("id");
+                    pw = response.getString("pw");
+                    language = response.getJSONArray("language");
+                    item = response.getJSONObject("item");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "onErrorResponse: " + error);
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", etID.getText().toString());
-                params.put("pw", etPW.getText().toString());
-                return params;
-            }
-        };
-
-        stringRequest.setTag(TAG);
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                queue.add(stringRequest);
-            }
         });
+
+        jsonRequest.setTag(TAG);
+        queue.add(jsonRequest);
+
 
     }
 
